@@ -1,5 +1,6 @@
 import java.util.*;
 
+import static java.util.Collections.max;
 import static java.util.Collections.sort;
 
 public class Main {
@@ -16,9 +17,6 @@ public class Main {
         people.add(new Person("Antonio", "Los Zapatos Para Mis Ninos", 2));
 
 
-
-
-
         System.out.println();
         System.out.println("По порядку добавления:");
         System.out.println(people);
@@ -30,14 +28,30 @@ public class Main {
         System.out.println();
 
         System.out.println("Сравнение по знатности:");
-        sort(people, new PersonsNameNobleComparator(2));
 
+        Comparator<Person> comparator  = (Person p1, Person p2) -> {
+            if (p1.getSurname().length() == p2.getSurname().length() |
+                    isItWorthToCompareAges(2, howManyWords(p1.surname), howManyWords(p2.surname)))  {
+                return p1.getAge() - p2.getAge();
+            } else {
+                return p1.getSurname().length() - p2.getSurname().length();
+            }
+        };
 
-
+        sort(people, comparator);
 
         System.out.println(people);
 
+    }
+    public static int howManyWords(String str) {
+        int counter = 1;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == ' ') counter++;
+        }
+        return counter;
+    }
 
-
+    public static boolean isItWorthToCompareAges(int maxWords, int surnameWords1, int surnameWords2) {
+        return (surnameWords1 >= maxWords & surnameWords2 >= maxWords);
     }
 }
