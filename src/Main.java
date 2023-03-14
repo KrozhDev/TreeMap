@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.function.Predicate;
 
 import static java.util.Collections.sort;
 
@@ -8,8 +9,8 @@ public class Main {
         List<Person> people = new ArrayList<>();
         people.add(new Person("Petya","Vasichckin", 8));
         people.add(new Person("Tanya", "Ogurtsova", 15));
-        people.add(new Person("Olya", "Kry" ,16));
-        people.add(new Person("Anya", "Rya", 15));
+        people.add(new Person("Olya", "Kry" ,21));
+        people.add(new Person("Anya", "Rya", 20));
         people.add(new Person("Anya", "Ordzhonikidze", 5));
         people.add(new Person("Juan", "Clod Van Dam De France", 3));
         people.add(new Person("Borh", "Tri Galki", 59));
@@ -33,9 +34,17 @@ public class Main {
         sort(people, new PersonsNameNobleComparator(2));
 
 
-
-
+        //Первый способ с охранением
+        Predicate<Person> predic = ( p -> p.getAge() < 18);
+        people.removeIf(predic);
         System.out.println(people);
+
+
+        //Второй способ на лету
+        people.removeIf(p -> p.getAge() < 18);
+        System.out.println(people);
+
+
 
 
 
